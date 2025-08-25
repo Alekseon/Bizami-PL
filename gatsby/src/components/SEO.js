@@ -1,36 +1,10 @@
-import { graphql, useStaticQuery } from "gatsby";
 import React from "react";
 import { Helmet } from "react-helmet";
 
 export default function SEO({ children, location, description, title, image }) {
-  const data = useStaticQuery(graphql`
-      query SeoFromSanity {
-          sanityMetaData {
-              titleT {
-                  en
-                  pl
-              }
-              descriptionT {
-                  en
-                  pl
-              }
-              keywordsT {
-                  en
-                  pl
-              }
-          }
-          site {
-              siteMetadata {
-                  siteUrl
-                  title
-                  description
-              }
-          }
-      }
-  `);
-  const metaTitle = location === 'pl' ? data.sanityMetaData.titleT.pl : data.sanityMetaData.titleT.en;
-  const metaDescription = location === 'pl' ? data.sanityMetaData.descriptionT.pl : data.sanityMetaData.descriptionT.en;
-  const metaKeywords = location === 'pl' ? data.sanityMetaData.keywordsT.pl : data.sanityMetaData.keywordsT.en;
+  const metaTitle = location === "title";
+  const metaDescription = "description"
+  const metaKeywords = "keywords"
   return (
     <Helmet titleTemplate={`%s`}>
       <html lang="pl" />
