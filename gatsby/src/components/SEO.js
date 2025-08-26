@@ -28,9 +28,9 @@ export default function SEO({ children, location, description, title, image }) {
             }
         }
     `);
-    const metaTitle = location === 'pl' ? data.sanityMetaData.titleT.pl : data.sanityMetaData.titleT.en;
-    const metaDescription = location === 'pl' ? data.sanityMetaData.descriptionT.pl : data.sanityMetaData.descriptionT.en;
-    const metaKeywords = location === 'pl' ? data.sanityMetaData.keywordsT.pl : data.sanityMetaData.keywordsT.en;
+    const metaTitle = location === 'pl' ? data.sanityPageMetadata.titleT.pl : data.sanityPageMetadata.titleT.en;
+    const metaDescription = location === 'pl' ? data.sanityPageMetadata.descriptionT.pl : data.sanityPageMetadata.descriptionT.en;
+    const metaKeywords = location === 'pl' ? data.sanityPageMetadata.keywordsT.pl : data.sanityPageMetadata.keywordsT.en;
   return (
     <Helmet titleTemplate={`%s`}>
       <html lang="pl" />
