@@ -25,19 +25,31 @@ module.exports = {
       resolve: 'gatsby-plugin-sitemap',
       options: {
         query: `
-        {
-          allSitePage(filter: {context: {locale: {eq: "en"}}}) {
-            edges {
-              node {
-                path
-              }
+      {
+        site {
+          siteMetadata {
+            siteUrl
+          }
+        }
+        allSitePage(filter: {context: {locale: {eq: "pl"}}}) {
+          edges {
+            node {
+              path
             }
           }
         }
-        `,
-        host:  'https://bizami.pl',
-        sitemap: 'https://bizami.pl/sitemap.xml',
-        resolveSiteUrl: () => 'https://bizami.pl',
+      }
+    `,
+        resolveSiteUrl: ({ site }) => site.siteMetadata.siteUrl,
+        resolvePages: ({ allSitePage }) =>
+          allSitePage.edges.map(({ node }) => ({
+            path: node.path,
+          })),
+        serialize: ({ path }) => ({
+          url: path,
+          changefreq: 'daily',
+          priority: 0.7,
+        }),
       }
     },
     {
