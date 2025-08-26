@@ -1,8 +1,9 @@
-import dotenv from "dotenv";
+// gatsby-config.js (CommonJS dla Gatsby 2)
+require("dotenv").config({ path: `.env.${process.env.NODE_ENV}` });
 
-dotenv.config({ path: `.env.${process.env.NODE_ENV}` });
+const isDev = process.env.NODE_ENV === "development";
 
-export default {
+module.exports = {
   siteMetadata: {
     title: `Welcome to Bizami – Business Intelligence in Logistic`,
     siteUrl: "https://www.bizami.pl",
@@ -13,11 +14,49 @@ export default {
     "gatsby-plugin-react-helmet",
     "gatsby-plugin-styled-components",
     {
+      resolve: 'gatsby-plugin-robots-txt',
+      options: {
+        host:  'https://bizami.pl/',
+        sitemap: 'https://bizami.pl/sitemap.xml',
+        policy: [{userAgent: '*', allow: '/'}]
+      }
+    },
+    {
+      resolve: 'gatsby-plugin-sitemap',
+      options: {
+        query: `
+      {
+        site {
+          siteMetadata {
+            siteUrl
+          }
+        }
+        allSitePage(filter: {context: {locale: {eq: "pl"}}}) {
+          edges {
+            node {
+              path
+            }
+          }
+        }
+      }
+    `,
+        resolveSiteUrl: ({ site }) => site.siteMetadata.siteUrl,
+        resolvePages: ({ allSitePage }) =>
+          allSitePage.edges.map(({ node }) => ({
+            path: node.path,
+          })),
+        serialize: ({ path }) => ({
+          url: path,
+          changefreq: 'daily',
+          priority: 0.7,
+        }),
+      }
+    },
+    {
       resolve: "gatsby-source-sanity",
       options: {
         projectId: "q46bplag",
         dataset: "production",
-        watchMode: true,
         token: process.env.SANITY_TOKEN,
       },
     },
