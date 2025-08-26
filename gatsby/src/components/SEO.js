@@ -3,9 +3,34 @@ import React from "react";
 import { Helmet } from "react-helmet";
 
 export default function SEO({ children, location, description, title, image }) {
-    const metaTitle = "Narzędzie do prognozowania popytu i optymalizacji magazynowych - Bizami";
-    const metaDescription = "Platforma BIZAMI – narzędzie do zarządzania zapasami i zakupami. Precyzyjne prognozy, optymalizacja kosztów, pełna kontrola nad magazynami.";
-    const metaKeywords = "optymalizacja zakupów w magazynach, oprogramowanie do zarządzania zapasami, prognozowanie popytu B2B, system do zarządzania wielomagazynowego, automatyzacja zamówień, redukcja kosztów magazynowych, kontrola stanów magazynowych, zarządzanie zapasami w rozproszonych lokalizacjach, inteligentne zarządzanie zapasami, platforma do zakupów i zapasów dla dużych firm"
+    const data = useStaticQuery(graphql`
+        query SeoFromSanity {
+            sanityPageMetadata {
+                titleT {
+                    en
+                    pl
+                }
+                descriptionT {
+                    en
+                    pl
+                }
+                keywordsT {
+                    en
+                    pl
+                }
+            }
+            site {
+                siteMetadata {
+                    siteUrl
+                    title
+                    description
+                }
+            }
+        }
+    `);
+    const metaTitle = location === 'pl' ? data.sanityMetaData.titleT.pl : data.sanityMetaData.titleT.en;
+    const metaDescription = location === 'pl' ? data.sanityMetaData.descriptionT.pl : data.sanityMetaData.descriptionT.en;
+    const metaKeywords = location === 'pl' ? data.sanityMetaData.keywordsT.pl : data.sanityMetaData.keywordsT.en;
   return (
     <Helmet titleTemplate={`%s`}>
       <html lang="pl" />
