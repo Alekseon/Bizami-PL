@@ -13,43 +13,13 @@ module.exports = {
   plugins: [
     "gatsby-plugin-react-helmet",
     "gatsby-plugin-styled-components",
+    "gatsby-plugin-sitemap",
     {
       resolve: 'gatsby-plugin-robots-txt',
       options: {
         host:  'https://bizami.pl/',
         sitemap: 'https://bizami.pl/sitemap.xml',
         policy: [{userAgent: '*', allow: '/'}]
-      }
-    },
-    {
-      resolve: 'gatsby-plugin-sitemap',
-      options: {
-        query: `
-      {
-        site {
-          siteMetadata {
-            siteUrl
-          }
-        }
-        allSitePage(filter: {context: {locale: {eq: "pl"}}}) {
-          edges {
-            node {
-              path
-            }
-          }
-        }
-      }
-    `,
-        resolveSiteUrl: ({ site }) => site.siteMetadata.siteUrl,
-        resolvePages: ({ allSitePage }) =>
-          allSitePage.edges.map(({ node }) => ({
-            path: node.path,
-          })),
-        serialize: ({ path }) => ({
-          url: path,
-          changefreq: 'daily',
-          priority: 0.7,
-        }),
       }
     },
     {
