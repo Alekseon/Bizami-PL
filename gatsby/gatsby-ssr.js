@@ -21,7 +21,14 @@ export function onRenderBody({ setHeadComponents }) {
     },
     "telephone": "+48 603 603 285",
     "email": "kontakt@bizami.pl",
-    "openingHours": "Mo-Fr 09:00-17:00",
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
+        "opens": "09:00",
+        "closes": "17:00"
+      }
+    ]
     "sameAs": ["https://www.linkedin.com/company/bizami-pl"]
   };
 
