@@ -53,31 +53,6 @@ export default function SEO({ children, location, description, title, image }) {
     const siteUrl = data.site.siteMetadata.siteUrl;
     const canonicalUrl = new URL(pathname || "/", siteUrl).href;
 
-    // --- JSON-LD dla Organization (Twój obiekt) ---
-    const orgJsonLd = {
-        "@context": "https://schema.org",
-        "@type": "Organization",
-        "name": "Bizami",
-        "url": "https://www.bizami.pl",
-        "logo": "https://www.bizami.pl/logo.svg",
-        "image": "https://www.bizami.pl/logo.svg",
-        "description":
-          "Platforma BIZAMI – narzędzie do zarządzania zapasami i zakupami. Precyzyjne prognozy, optymalizacja kosztów, pełna kontrola nad magazynami.",
-        "address": {
-            "@type": "PostalAddress",
-            "streetAddress": "ul. Kostki Napierskiego 7",
-            "addressLocality": "Gdynia",
-            "postalCode": "81-469",
-            "addressCountry": "PL"
-        },
-        "telephone": "+48 603 603 285",
-        "email": "kontakt@bizami.pl",
-        "openingHours": "Mo-Fr 09:00-17:00",
-        "sameAs": [
-            "https://www.linkedin.com/company/bizami-pl"
-        ]
-    };
-
     return (
       <Helmet titleTemplate="%s">
           <html lang={locale} />
@@ -112,12 +87,6 @@ export default function SEO({ children, location, description, title, image }) {
 
           <meta name="robots" content="INDEX,FOLLOW" />
           <meta name="google-site-verification" content="56CGrjx_pVO9r0534FsJuu-WcnJOWksesTn5Ugcu_I0" />
-
-          {/* >>> JSON-LD wstrzyknięty jako surowy tekst <<< */}
-          <script
-            type="application/ld+json"
-            dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
-          />
           {children}
       </Helmet>
     );
