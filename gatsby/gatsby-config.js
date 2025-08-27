@@ -28,6 +28,8 @@ module.exports = {
         projectId: "q46bplag",
         dataset: "production",
         token: process.env.SANITY_TOKEN,
+        watchMode: true,
+        overlayDrafts: true,
       },
     },
     {
@@ -38,4 +40,5 @@ module.exports = {
       },
     },
   ],
+
 };
