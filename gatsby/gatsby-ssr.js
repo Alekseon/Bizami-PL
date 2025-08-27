@@ -28,7 +28,7 @@ export function onRenderBody({ setHeadComponents }) {
         "opens": "09:00",
         "closes": "17:00"
       }
-    ]
+    ],
     "sameAs": ["https://www.linkedin.com/company/bizami-pl"]
   };
 
