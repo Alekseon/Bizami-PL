@@ -1,10 +1,8 @@
-// gatsby-ssr.js
 import React from 'react';
 import Layout from './src/components/Layout';
 import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
 import { FormProvider } from './src/components/FormContext';
 
-// 1) Wstrzyknięcie JSON-LD globalnie
 export function onRenderBody({ setHeadComponents }) {
   const orgJsonLd = {
     "@context": "https://schema.org",
@@ -36,7 +34,6 @@ export function onRenderBody({ setHeadComponents }) {
   ]);
 }
 
-// 2) Twoje wrapery — bez zbędnego średnika w JSX
 export function wrapPageElement({ element, props }) {
   return (
     <GoogleReCaptchaProvider reCaptchaKey={process.env.GATSBY_CAPTCHA_KEY || ''}>
