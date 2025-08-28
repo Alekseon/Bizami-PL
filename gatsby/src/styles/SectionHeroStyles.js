@@ -21,7 +21,7 @@ export const HeroSectionStyles = styled.div`
 
   .content {
     color: white;
-    max-width: 1320px;
+    max-width: 1440px;
     @media (max-width: 1024px) {
       grid-template-columns: minmax(auto, 780px) minmax(35vw, auto);
     }

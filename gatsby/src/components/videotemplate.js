@@ -146,10 +146,10 @@ const VideoStyled = styled.div`
   .description{
     justify-content: center;
     display: grid;
-    max-width: 1320px;
+    max-width: 1400px;
     margin: 0 auto;
     grid-template-columns: 1fr 1fr;
-    padding: 0 60px 0 160px;
+    padding: 0 60px 0 200px;
     grid-gap: 150px;
     text-wrap: wrap;
     

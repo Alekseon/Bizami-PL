@@ -65,6 +65,10 @@ export const BenefitsStyles = styled.div`
         padding: 0 0 15px;
        flex-direction: column-reverse;
       }
+      
+      img {
+        object-fit: contain;
+      }
 
       h3 {
         margin: 0;

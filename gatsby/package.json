@@ -10,9 +10,7 @@
     "develop": "cross-env NODE_OPTIONS=\"-r esm\" gatsby develop",
     "start": "npm run develop",
     "serve": "cross-env NODE_OPTIONS=\"-r esm\" gatsby serve",
-    "clean": "gatsby clean",
-    "netlify": "netlify dev",
-    "prebuild": "netlify-lambda install"
+    "clean": "gatsby clean"
   },
   "dependencies": {
     "@fontsource/montserrat": "^5.0.17",
@@ -29,8 +27,6 @@
     "gatsby-source-sanity": "^6.0.4",
     "isomorphic-fetch": "^2.2.1",
     "js-cookie": "^3.0.5",
-    "netlify-cli": "^2.62.0",
-    "netlify-lambda": "^2.0.1",
     "nodemailer": "^6.9.13",
     "normalize.css": "^8.0.1",
     "react": "^16.13.1",

@@ -12,7 +12,7 @@ export const SectionAboutStyles = styled.div`
     justify-content: center;
     align-items: center;
     margin: 0 auto;
-    max-width: 1320px;
+    max-width: 1440px;
     @media (max-width: 768px) {
       flex-direction: column;
       align-items: flex-start;
