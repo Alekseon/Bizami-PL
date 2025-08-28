@@ -149,7 +149,7 @@ const VideoStyled = styled.div`
     max-width: 1400px;
     margin: 0 auto;
     grid-template-columns: 1fr 1fr;
-    padding: 0 60px 0 200px;
+    padding: 0 60px 0 160px;
     grid-gap: 150px;
     text-wrap: wrap;
     
