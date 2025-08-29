@@ -343,7 +343,7 @@ const ModalStyles = styled.div`
 }
 
 .fadeOut2 {
-  animation: fadeOutPg2 3s ease forwards;
+  animation: fadeOutPg2 0.3s ease forwards;
   
 }
 
@@ -358,7 +358,7 @@ const ModalStyles = styled.div`
 }
 
 .fadeOut3 {
-  animation: fadeOutPg3 1.5s ease forwards;
+  animation: fadeOutPg3 0.3s ease forwards;
   
 }
 
