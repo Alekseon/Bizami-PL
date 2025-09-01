@@ -1,5 +1,5 @@
 // functions/api/send-email.js
-const ALLOW_ORIGIN = "*";
+const ALLOW_ORIGIN = "*"; // w produkcji wpisz konkretny origin
 
 function json(body, status = 200) {
   return new Response(JSON.stringify(body), {
@@ -49,12 +49,11 @@ export const onRequest = async ({ request, env }) => {
       },
     };
 
-    const r = await fetch('https://api.smtpexpress.com/send', {
+    const r = await fetch("https://api.smtpexpress.com/send", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "X-Project-Id": env.SMTPEXPRESS_PROJECT_ID,
-        "X-Project-Secret": env.SMTPEXPRESS_PROJECT_SECRET, // lub Authorization: Bearer ... — zgodnie z ich API
+        "Authorization": `Bearer ${env.SMTPEXPRESS_PROJECT_SECRET}`,
       },
       body: JSON.stringify(payload),
     });
