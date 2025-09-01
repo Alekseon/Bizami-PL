@@ -8,10 +8,6 @@ import Cookies from 'js-cookie';
 
 export const onClientEntry = () => {
   const savedLocale = Cookies.get('language');
-  console.log(process.env.GATSBY_CAPTCHA_KEY)
-  console.log(process.env.SANITY_TOKEN)
-  console.log(env.GATSBY_CAPTCHA_KEY)
-  console.log(env.SANITY_TOKEN)
   if (savedLocale) {
     if (window.location.pathname === '/') {
       
