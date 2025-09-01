@@ -1,5 +1,5 @@
 // functions/api/send-email.js
-const ALLOW_ORIGIN = "*"; // w produkcji wpisz konkretny origin
+const ALLOW_ORIGIN = "*";
 
 function json(body, status = 200) {
   return new Response(JSON.stringify(body), {
@@ -33,10 +33,10 @@ export const onRequest = async ({ request, env }) => {
     const payload = {
       subject: "Kontakt Bizami",
       message: "<h1>Kontakt Bizami</h1>",
-      sender: { name: "AB Digital Enterprises", email: env.SMTPEXPRESS_SENDER_EMAIL },
-      recipients: [{ name: "Recipient", email: env.SMTPEXPRESS_RECIPIENTS_EMAIL }],
+      sender: { name: "AB Digital Enterprises", email: 'bizamipl-4c0d3c@smtpexpress.email' },
+      recipients: [{ name: "Recipient", email: 'a.sobanska@alekseon.com' }],
       template: {
-        id: env.SMTPEXPRESS_TEMPLATE_ID,
+        id: 'HtMAwRLrWKf_58z26OJcW',
         variables: {
           name: body.username,
           email: body.email,
@@ -49,11 +49,12 @@ export const onRequest = async ({ request, env }) => {
       },
     };
 
-    const r = await fetch("https://api.smtpexpress.com/send", {
+    const r = await fetch('https://api.smtpexpress.com/send', {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${env.SMTPEXPRESS_PROJECT_SECRET}`,
+        "X-Project-Id": 'sm0pid-idkdvHO86_jIiAZrNLXyZmOC6',
+        "X-Project-Secret": '371570c4585e79c008b60f8544fbd3d01d02f0726418b61631',
       },
       body: JSON.stringify(payload),
     });
