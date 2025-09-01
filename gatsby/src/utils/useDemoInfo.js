@@ -26,10 +26,14 @@ export default function useDemoInfo({ values}) {
             quantity: values.magCount,
             token: token,
         };
-       
+
+
+        const res = await fetch('/api/email');
+        const text = await res.text();
+        console.log(text)
         
 
-            const rec = await fetch(`functions/email`, {
+            const rec = await fetch(`${process.env.GATSBY_SERVERLESS_BASE}/handleRecaptchaV3`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
