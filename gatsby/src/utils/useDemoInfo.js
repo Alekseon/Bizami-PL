@@ -24,25 +24,36 @@ export default function useDemoInfo({ values }) {
             token: token,
         };
 
-
-        const res = await fetch('/api/email');
-        const text = await res.text();
-        console.log(text)
-
-
         const rec = await fetch("/api/recaptcha", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ token }),
         });
-
-            console.log(rec)
             
             if (!rec.ok) {
                 setMessage('Błąd autoryzacji recaptcha. Prosimy o kontakt poprzez email: kontakt@bizami.pl.');
                 setError(true);
             }
             if(rec.ok) {
+
+                const emailSend = await fetch("/api/email", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(body),
+                });
+
+                if (emailSend.ok) {
+                    setMessage('Dziękujemy za przesłanie zapytania. Skontaktujemy się w ciągu 48 godzin.');
+                } else {
+                    setError(true);
+                    setMessage('Prosimy o kontakt poprzez email: kontakt@bizami.pl.');
+                }
+
+
+
+
+
+
                 const smtpexpressClient = createClient({
                     projectId: `${process.env.GATSBY_SMTPXP_PROJECT_ID}`,
                     projectSecret: `${process.env.GATSBY_SMTPXP_PROJECT_SECRET}`
@@ -73,11 +84,9 @@ export default function useDemoInfo({ values }) {
                             }
                         }
                     });
-                    setMessage('Dziękujemy za przesłanie zapytania. Skontaktujemy się w ciągu 48 godzin.');
 
                 } catch {
-                    setError(true);
-                    setMessage('Prosimy o kontakt poprzez email: kontakt@bizami.pl.');
+
                 }
 
                 window.dataLayer?.push({
