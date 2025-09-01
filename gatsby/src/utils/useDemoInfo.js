@@ -28,7 +28,7 @@ export default function useDemoInfo({ values}) {
         };
 
 
-        const res = await fetch('/email');
+        const res = await fetch('/api/email');
         const text = await res.text();
         console.log(text)
 
