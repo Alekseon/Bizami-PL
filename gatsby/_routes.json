@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "include": ["/api/*"],
+  "exclude": [
+    "/**/*.*",
+    "/page-data/*",
+    "/assets/*",
+    "/static/*",
+    "/favicon.ico",
+    "/robots.txt",
+    "/sitemap-*.xml",
+    "/404",
+    "/404.html"
+  ]
+}
