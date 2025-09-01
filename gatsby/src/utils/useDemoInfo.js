@@ -44,35 +44,41 @@ export default function useDemoInfo({ values }) {
             }
             if(rec.ok) {
                 const smtpexpressClient = createClient({
-                    projectId: `${process.env.GATSBY_SMTPEXPRESS_PROJECT_ID}`,
-                    projectSecret: `${process.env.GATSBY_SMTPEXPRESS_PROJECT_SECRET}`
+                    projectId: `${process.env.GATSBY_SMTPXP_PROJECT_ID}`,
+                    projectSecret: `${process.env.GATSBY_SMTPXP_PROJECT_SECRET}`
                 });
 
-                smtpexpressClient.sendApi.sendMail({
-                    subject: "Kontakt Bizami",
-                    message: "<h1>Kontakt Bizami</h1>",
-                    sender: {
-                        name: "AB Digital Enterprises",
-                        email: `${process.env.GATSBY_SMTPEXPRESS_SENDER_EMAIL}`
-                    },
-                    recipients: {
-                        name: "My recipient's name",
-                        email: `${process.env.GATSBY_SMTPEXPRESS_RECIPIENTS_EMAIL}`
-                    },
-                    template: {
-                        id: `${process.env.GATSBY_SMTPEXPRESS_TEMPLATE_ID}`,
-                        variables: {
-                            name: values.username,
-                            email: values.email,
-                            phone: values.phone,
-                            company: values.company,
-                            magSize: values.itemCount,
-                            erp: values.erp,
-                            quantity: values.magCount,
+                try {
+                    smtpexpressClient.sendApi.sendMail({
+                        subject: "Kontakt Bizami",
+                        message: "<h1>Kontakt Bizami</h1>",
+                        sender: {
+                            name: "AB Digital Enterprises",
+                            email: `${process.env.GATSBY_SMTPXP_SENDER}`
+                        },
+                        recipients: {
+                            name: "My recipient's name",
+                            email: `${process.env.GATSBY_SMTPXP_RECIPIENTS}`
+                        },
+                        template: {
+                            id: `${process.env.GATSBY_SMTPEXPRESS_TEMPLATE_ID}`,
+                            variables: {
+                                name: body.username,
+                                email: body.email,
+                                phone: body.phone,
+                                company: body.company,
+                                magSize: body.itemCount,
+                                erp: body.erp,
+                                quantity: body.magCount,
+                            }
                         }
-                    }
-                });
-                setMessage('Dziękujemy za przesłanie zapytania. Skontaktujemy się w ciągu 48 godzin.');
+                    });
+                    setMessage('Dziękujemy za przesłanie zapytania. Skontaktujemy się w ciągu 48 godzin.');
+
+                } catch {
+                    setError(true);
+                    setMessage('Prosimy o kontakt poprzez email: kontakt@bizami.pl.');
+                }
 
                 window.dataLayer?.push({
                     event: 'inquiry-sent'
