@@ -33,10 +33,10 @@ export const onRequest = async ({ request, env }) => {
     const payload = {
       subject: "Kontakt Bizami",
       message: "<h1>Kontakt Bizami</h1>",
-      sender: { name: "AB Digital Enterprises", email: 'bizamipl-4c0d3c@smtpexpress.email' },
-      recipients: [{ name: "Recipient", email: 'a.sobanska@alekseon.com' }],
+      sender: { name: "AB Digital Enterprises", email: env.SMTPEXPRESS_SENDER_EMAIL },
+      recipients: [{ name: "Recipient", email: env.SMTPEXPRESS_RECIPIENTS_EMAIL }],
       template: {
-        id: 'HtMAwRLrWKf_58z26OJcW',
+        id: env.SMTPEXPRESS_TEMPLATE_ID,
         variables: {
           name: body.username,
           email: body.email,
@@ -49,12 +49,12 @@ export const onRequest = async ({ request, env }) => {
       },
     };
 
-    const r = await fetch('https://api.smtpexpress.com/send', {
+    const r = await fetch(env.SMTPEXPRESS_API_URL /* <- wstaw URL z docs */, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "X-Project-Id": 'sm0pid-idkdvHO86_jIiAZrNLXyZmOC6',
-        "X-Project-Secret": '371570c4585e79c008b60f8544fbd3d01d02f0726418b61631',
+        "X-Project-Id": env.SMTPEXPRESS_PROJECT_ID,
+        "X-Project-Secret": env.SMTPEXPRESS_PROJECT_SECRET, // lub Authorization: Bearer ... — zgodnie z ich API
       },
       body: JSON.stringify(payload),
     });
