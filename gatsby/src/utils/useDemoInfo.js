@@ -1,10 +1,8 @@
-
+import { createClient } from "smtpexpress"
+require("dotenv").config();
 import { useState } from "react";
+export default function useDemoInfo({ values }) {
 
-export default function useDemoInfo({ values}) {
-    
-   
-    
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState('');
     const [error, setError] =useState(false);
@@ -44,8 +42,44 @@ export default function useDemoInfo({ values}) {
             if (!rec.ok) {
                 setMessage('Błąd autoryzacji recaptcha. Prosimy o kontakt poprzez email: kontakt@bizami.pl.');
                 setError(true);
-                
             }
+            if(rec.ok) {
+                const smtpexpressClient = createClient({
+                    projectId: `${process.env.GATSBY_SMTPEXPRESS_PROJECT_ID}`,
+                    projectSecret: `${process.env.GATSBY_SMTPEXPRESS_PROJECT_SECRET}`
+                });
+
+                smtpexpressClient.sendApi.sendMail({
+                    subject: "Kontakt Bizami",
+                    message: "<h1>Kontakt Bizami</h1>",
+                    sender: {
+                        name: "AB Digital Enterprises",
+                        email: `${process.env.GATSBY_SMTPEXPRESS_SENDER_EMAIL}`
+                    },
+                    recipients: {
+                        name: "My recipient's name",
+                        email: `${process.env.GATSBY_SMTPEXPRESS_RECIPIENTS_EMAIL}`
+                    },
+                    template: {
+                        id: `${process.env.GATSBY_SMTPEXPRESS_TEMPLATE_ID}`,
+                        variables: {
+                            name: values.username,
+                            email: values.email,
+                            phone: values.phone,
+                            company: values.company,
+                            magSize: values.itemCount,
+                            erp: values.erp,
+                            quantity: values.magCount,
+                        }
+                    }
+                });
+                setMessage('Dziękujemy za przesłanie zapytania. Skontaktujemy się w ciągu 48 godzin.');
+
+                window.dataLayer?.push({
+                    event: 'inquiry-sent'
+                });
+            }
+
         //
         //     const textc = await rec.text();
         //
