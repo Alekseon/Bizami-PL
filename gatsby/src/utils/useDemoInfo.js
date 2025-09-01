@@ -44,6 +44,9 @@ export default function useDemoInfo({ values }) {
 
                 if (emailSend.ok) {
                     setMessage('Dziękujemy za przesłanie zapytania. Skontaktujemy się w ciągu 48 godzin.');
+                    window.dataLayer?.push({
+                        event: 'inquiry-sent'
+                    });
                 } else {
                     setError(true);
                     setMessage('Prosimy o kontakt poprzez email: kontakt@bizami.pl.');
@@ -53,45 +56,36 @@ export default function useDemoInfo({ values }) {
 
 
 
+                //
+                // const smtpexpressClient = createClient({
+                //     projectId: `${process.env.GATSBY_SMTPXP_PROJECT_ID}`,
+                //     projectSecret: `${process.env.GATSBY_SMTPXP_PROJECT_SECRET}`
+                // });
+                //     smtpexpressClient.sendApi.sendMail({
+                //         subject: "Kontakt Bizami",
+                //         message: "<h1>Kontakt Bizami</h1>",
+                //         sender: {
+                //             name: "AB Digital Enterprises",
+                //             email: `${process.env.GATSBY_SMTPXP_SENDER}`
+                //         },
+                //         recipients: {
+                //             name: "My recipient's name",
+                //             email: `${process.env.GATSBY_SMTPXP_RECIPIENTS}`
+                //         },
+                //         template: {
+                //             id: `${process.env.GATSBY_SMTPEXPRESS_TEMPLATE_ID}`,
+                //             variables: {
+                //                 name: body.username,
+                //                 email: body.email,
+                //                 phone: body.phone,
+                //                 company: body.company,
+                //                 magSize: body.itemCount,
+                //                 erp: body.erp,
+                //                 quantity: body.magCount,
+                //             }
+                //         }
+                //     });
 
-                const smtpexpressClient = createClient({
-                    projectId: `${process.env.GATSBY_SMTPXP_PROJECT_ID}`,
-                    projectSecret: `${process.env.GATSBY_SMTPXP_PROJECT_SECRET}`
-                });
-
-                try {
-                    smtpexpressClient.sendApi.sendMail({
-                        subject: "Kontakt Bizami",
-                        message: "<h1>Kontakt Bizami</h1>",
-                        sender: {
-                            name: "AB Digital Enterprises",
-                            email: `${process.env.GATSBY_SMTPXP_SENDER}`
-                        },
-                        recipients: {
-                            name: "My recipient's name",
-                            email: `${process.env.GATSBY_SMTPXP_RECIPIENTS}`
-                        },
-                        template: {
-                            id: `${process.env.GATSBY_SMTPEXPRESS_TEMPLATE_ID}`,
-                            variables: {
-                                name: body.username,
-                                email: body.email,
-                                phone: body.phone,
-                                company: body.company,
-                                magSize: body.itemCount,
-                                erp: body.erp,
-                                quantity: body.magCount,
-                            }
-                        }
-                    });
-
-                } catch {
-
-                }
-
-                window.dataLayer?.push({
-                    event: 'inquiry-sent'
-                });
             }
 
         //

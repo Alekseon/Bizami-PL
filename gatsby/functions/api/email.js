@@ -33,10 +33,10 @@ export const onRequest = async ({ request, env }) => {
     const payload = {
       subject: "Kontakt Bizami",
       message: "<h1>Kontakt Bizami</h1>",
-      sender: { name: "AB Digital Enterprises", email: env.GATSBY_SMTPXP_SENDER },
-      recipients: [{ name: "Recipient", email: env.GATSBY_SMTPXP_RECIPIENTS }],
+      sender: { name: "AB Digital Enterprises", email: env.SMTPEXPRESS_SENDER_EMAIL },
+      recipients: [{ name: "Recipient", email: env.SMTPEXPRESS_RECIPIENTS_EMAIL }],
       template: {
-        id: env.GATSBY_SMTPEXPRESS_TEMPLATE_ID,
+        id: env.SMTPEXPRESS_TEMPLATE_ID,
         variables: {
           name: body.username,
           email: body.email,
@@ -49,12 +49,12 @@ export const onRequest = async ({ request, env }) => {
       },
     };
 
-    const r = await fetch(env.SMTPEXPRESS_API_URL /* <- wstaw URL z docs */, {
+    const r = await fetch('https://api.smtpexpress.com/send', {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "X-Project-Id": env.GATSBY_SMTPXP_PROJECT_ID,
-        "X-Project-Secret": env.GATSBY_SMTPXP_PROJECT_SECRET, // lub Authorization: Bearer ... — zgodnie z ich API
+        "X-Project-Id": env.SMTPEXPRESS_PROJECT_ID,
+        "X-Project-Secret": env.SMTPEXPRESS_PROJECT_SECRET, // lub Authorization: Bearer ... — zgodnie z ich API
       },
       body: JSON.stringify(payload),
     });
