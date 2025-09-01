@@ -1,6 +1,5 @@
-
-export const onRequestGet: PagesFunction = async (ctx) => {
-  return new Response("Hello from Pages Functions!", {
-    headers: { "Content-Type": "text/plain; charset=utf-8" },
+export const onRequestGet = async (ctx) => {
+  return new Response("Hello from email.js", {
+    headers: { "Content-Type": "text/plain" },
   });
 };
