@@ -41,7 +41,7 @@ export default function useDemoInfo({ values}) {
 
             console.log(rec)
             
-            if (!rec) {
+            if (!rec.ok) {
                 setMessage('Błąd autoryzacji recaptcha. Prosimy o kontakt poprzez email: kontakt@bizami.pl.');
                 setError(true);
                 
