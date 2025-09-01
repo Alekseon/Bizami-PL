@@ -1,5 +1,4 @@
 import { createClient } from "smtpexpress"
-require("dotenv").config();
 import { useState } from "react";
 export default function useDemoInfo({ values }) {
 
