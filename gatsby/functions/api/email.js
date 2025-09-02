@@ -50,7 +50,7 @@ export const onRequest = async ({ request, env }) => {
     const payload = {
       subject: "Kontakt Bizami",
       message: "<h1>Kontakt Bizami</h1>",
-      sender: { name: "AB Digital Enterprises", email: SENDER },
+      sender: { name: "Bizami", email: SENDER },
       recipients: [{ name: "Recipient", email: RCPT }],
       template: {
         id: TEMPLATE_ID,
