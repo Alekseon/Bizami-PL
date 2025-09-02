@@ -49,7 +49,7 @@ export const onRequest = async ({ request, env }) => {
       },
     };
 
-    const r = await fetch(env.SMTPEXPRESS_API_URL /* <- wstaw URL z docs */, {
+    const r = await fetch('https://api.smtpexpress.com/send', {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
