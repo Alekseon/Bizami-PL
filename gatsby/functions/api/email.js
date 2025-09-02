@@ -27,16 +27,33 @@ export const onRequest = async ({ request, env }) => {
     return new Response(null, { status: 405, headers: { Allow: "POST, OPTIONS", "Access-Control-Allow-Origin": ALLOW_ORIGIN } });
   }
 
+  // --- ENV (tylko serwerowe, bez GATSBY_) ---
+  const API_URL = ("https://api.smtpexpress.com/send").trim();
+  const PROJECT_SECRET = (env.SMTPEXPRESS_PROJECT_SECRET || "").trim();
+  const SENDER = (env.SMTPEXPRESS_SENDER_EMAIL || "").trim();
+  const RCPT = (env.SMTPEXPRESS_RECIPIENTS_EMAIL || "").trim();
+  const TEMPLATE_ID = (env.SMTPEXPRESS_TEMPLATE_ID || "").trim();
+
+  const missing = [];
+  if (!PROJECT_SECRET) missing.push("SMTPEXPRESS_PROJECT_SECRET");
+  if (!SENDER) missing.push("SMTPEXPRESS_SENDER_EMAIL");
+  if (!RCPT) missing.push("SMTPEXPRESS_RECIPIENTS_EMAIL");
+  if (!TEMPLATE_ID) missing.push("SMTPEXPRESS_TEMPLATE_ID");
+  if (missing.length) return json({ ok:false, stage:"env", message:"Brak zmiennych środowiskowych", missing }, 500);
+
+  // diagnostyka (w logach Pages, nie wraca do klienta)
+  console.log("[send-email] secret len:", PROJECT_SECRET.length, "tail:", PROJECT_SECRET.slice(-4));
+
   try {
-    const body = await request.json();
+    const body = await request.json().catch(() => ({}));
 
     const payload = {
       subject: "Kontakt Bizami",
       message: "<h1>Kontakt Bizami</h1>",
-      sender: { name: "AB Digital Enterprises", email: env.SMTPEXPRESS_SENDER_EMAIL },
-      recipients: [{ name: "Recipient", email: env.SMTPEXPRESS_RECIPIENTS_EMAIL }],
+      sender: { name: "AB Digital Enterprises", email: SENDER },
+      recipients: [{ name: "Recipient", email: RCPT }],
       template: {
-        id: env.SMTPEXPRESS_TEMPLATE_ID,
+        id: TEMPLATE_ID,
         variables: {
           name: body.username,
           email: body.email,
@@ -49,21 +66,21 @@ export const onRequest = async ({ request, env }) => {
       },
     };
 
-    const r = await fetch('https://api.smtpexpress.com/send', {
+    const r = await fetch(API_URL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "X-Project-Id": env.SMTPEXPRESS_PROJECT_ID,
-        "X-Project-Secret": env.SMTPEXPRESS_PROJECT_SECRET, // lub Authorization: Bearer ... — zgodnie z ich API
+        // KLUCZ: autoryzacja Bearer z PROJECT SECRET
+        "Authorization": `Bearer ${PROJECT_SECRET}`,
       },
       body: JSON.stringify(payload),
     });
 
     const data = await r.json().catch(() => ({}));
-    if (!r.ok) return json({ ok: false, status: r.status, error: data }, r.status);
+    if (!r.ok) return json({ ok:false, stage:"api", status:r.status, error:data }, r.status);
 
-    return json({ ok: true, data }, 200);
+    return json({ ok:true, data }, 200);
   } catch (err) {
-    return json({ ok: false, error: String(err) }, 500);
+    return json({ ok:false, stage:"exception", error:String(err) }, 500);
   }
 };
